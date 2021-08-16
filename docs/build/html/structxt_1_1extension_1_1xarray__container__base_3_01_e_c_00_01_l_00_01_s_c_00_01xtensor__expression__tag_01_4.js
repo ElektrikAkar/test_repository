@@ -1,4 +1,0 @@
-var structxt_1_1extension_1_1xarray__container__base_3_01_e_c_00_01_l_00_01_s_c_00_01xtensor__expression__tag_01_4 =
-[
-    [ "type", "structxt_1_1extension_1_1xarray__container__base_3_01_e_c_00_01_l_00_01_s_c_00_01xtensor__expression__tag_01_4.html#a1168f746b16953a72f215b6907beb07d", null ]
-];
