@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>About Slide &mdash; SLIDE 2.0 documentation</title>
+  <title>OSQP solver documentation &mdash; OSQP 0.6.2 documentation</title>
   
 
   
@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/osqp_theme.css" type="text/css" />
 
   
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
   
 
   
@@ -36,15 +38,31 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The solver" href="solver/index.html" />
+<meta name="twitter:card" content="summary_large_image" >
+<meta name="twitter:creator" content="@bstellato" >
+<meta name="twitter:image"
+      content="https://osqp.org/docs/_static/img/logo.png">
+<meta name="twitter:description" content="The OSQP (Operator Splitting
+Quadratic Program) solver is a numerical optimization package for solving
+convex quadratic programs." >
+<meta property="og:url" content="https://osqp.org" >
+<meta property="og:title" content="OSQP solver documentation" >
+<meta property="og:description" content="The OSQP (Operator Splitting Quadratic
+Program) solver is a numerical optimization package for solving convex
+quadratic programs." >
+<meta property="og:image"
+content="https://osqp.org/docs/_static/img/logo.png">
+<meta property="fb:app_id" content="129555174389689">
+<meta property="og:type" content="website" >
+
 </head>
 
 <body class="wy-body-for-nav">
@@ -58,14 +76,21 @@
           
 
           
-            <a href="#" class="icon icon-home"> SLIDE
+            <a href="#">
           
 
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
           
             
+            
+              <div class="version">
+                0.6.2
+              </div>
             
           
 
@@ -89,16 +114,18 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">About <em>Slide</em></a></li>
-<li><a class="reference internal" href="#requirements">Requirements</a></li>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#getting-started">Getting started</a></li>
-<li><a class="reference internal" href="#license">License</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="solver/index.html">The solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started/index.html">Get started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/index.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codegen/index.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing/index.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing/index.html">Citing OSQP</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -112,7 +139,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">SLIDE</a>
+          <a href="#">OSQP</a>
         
       </nav>
 
@@ -145,7 +172,7 @@
     
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
-      <li>About <em>Slide</em></li>
+      <li>OSQP solver documentation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -164,80 +191,70 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <a class="reference internal image-reference" href="_images/slide_logo.png"><img alt="_images/slide_logo.png" src="_images/slide_logo.png" style="width: 100%;" /></a>
-<div class="section" id="about-slide">
-<h1>About <em>Slide</em><a class="headerlink" href="#about-slide" title="Permalink to this headline">¶</a></h1>
-<p><em>Slide</em> (simulator for lithium-ion degradation) is a code project mainly written in C++ to do fast simulations of degradation of lithium-ion batteries.
-Simulating 5000 1C CC cycles should take less than 1 minute; adding a CV phase doubles the calculation time to below 2 minutes. The project uses object oriented programming in C++, see documentation for more details.</p>
-<p>The underlying battery model is the Single Particle Model (SPM) with a coupled bulk thermal model.
-A spectral implementation of the SPM in Matlab was developed by Bizeray and Howey and is <a class="reference external" href="https://github.com/davidhowey/Spectral_li-ion_SPM">available separately on GitHub</a>.
-<em>Slide</em> adds various degradation models on top of the SPM. The equations were taken from literature and implemented in one large coupled model. Users can easily select which models they want to include in their simulations. They can set the values of the fitting parameters of those degradation models to fit their own data.</p>
-<p><em>Slide</em> is written to behave similarly to a battery tester. It offers functions to load cells with a constant current, a current profile or a constant voltage such that users can program their own degradation procedures. Some standard procedures have already been implemented (for calendar ageing and cycle ageing with regular CCCV cycles or with drive cycles). Also some reference performance tests have already been coded (to simulate a the capacity measurement, OCV curves, pulse discharge, etc.). Users can choose to store data points (current, voltage, temperature) at fixed time intervals during the degradation experiments, similar to how a battery tester stores such data.</p>
-<p>The results from the simulations are written to csv files. Users can write their own code to read and plot these results, but MATLAB-scripts are provided for this too.</p>
-<p>Detailed documentation is provided in the pdf documents. The code itself is also extensively documented.</p>
-<p>If you use <em>Slide</em> in your work, please cite our paper:</p>
-<p>J.M. Reniers, G. Mulder, D.A. Howey, “Review and performance comparison of mechanical-chemical degradation models for lithium-ion batteries”, Journal of The Electrochemical Society, 166(14), A3189, 2019, DOI [10.1149/2.0281914jes](<a class="reference external" href="https://doi.org/10.1149/2.0281914jes">https://doi.org/10.1149/2.0281914jes</a>).</p>
-<p>This code has been developed at the Department of Engineering Science of
-the University of Oxford.
-For information about our lithium-ion battery research, visit the <a class="reference external" href="https://howey.eng.ox.ac.uk">Battery Intelligence Lab</a> website.</p>
-<p>For more information and comments, please contact <a class="reference external" href="mailto:david&#46;howey&#37;&#52;&#48;eng&#46;ox&#46;ac&#46;uk">david<span>&#46;</span>howey<span>&#64;</span>eng<span>&#46;</span>ox<span>&#46;</span>ac<span>&#46;</span>uk</a>.</p>
-</div>
-<div class="section" id="requirements">
-<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
-<p>You will need a C++ programming environment to edit, compile and run the code.
-Eclipse is the environment used to develop the code, but other environments should work as well.
-Your computer must also have a C++ compiler installed.
-The code has been tested using g++.
-Extensive guidelines on how to install those programs is provided in the documentation.</p>
-<p>To display the results, various Matlab scripts are provided.
-To run those, you will need to have installed Matlab.
-The code has been tested using Matlab R2018a, but should work with other releases with no or minor modifications.</p>
-<p>To calculate the spatial discretisation, two open-source Matlab functions developped by others are being used.
-If you don’t change the discretisation, you will not need them.
-If you do change the discretisation, please read the license files attached to those two functions (‘license chebdif.txt’ and ‘lisence cumsummat.txt’).</p>
-</div>
-<div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>### Option 1 - Downloading a .zip file ###
-<a class="reference external" href="https://github.com/davidhowey/SLIDE/archive/master.zip">Download a .zip file of the code</a></p>
-<p>Then, unzip the folder in a chosen directory on your computer.</p>
-<p>### Option 2 - Cloning the repository with Git ###
-To clone the repository, you will first need to have [Git][6] installed on
-your computer. Then, navigate to the directory where you want to clone the
-repository in a terminal, and type:</p>
-<p>The folder containing all the files should appear in your chosen directory.</p>
-</div>
-<div class="section" id="getting-started">
-<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>Detailed instructions on how to get started are in the documentation.
-You first have to import the code to your programming environment and make sure the settings are correct (e.g. to allow enough memory for the calculation).
-Then you can open Main.cpp, which implements the main-function. In this function you choose what to simulate by uncommenting the thing you want to do (and commenting all other lines).
-It is recommended to start with the CCCV-function, which simulates a few CCCV cycles.
-You will then have to build (or compile) the code, which might take a while the first time you do this.
-Now you can run the code (either locally in the programming environment or by running the executable which was created by the compiler).
-While the simulation is running, csv files with the results are written in one or multiple subfolders.
-When the simulation has finished, you can run the corresponding MATLAB-script (e.g. readCCCV.m) to plot the outcomes.</p>
-<p>Much more detailed documentation can be found in the documentation (from ‘1 Getting started’ to ‘7 appendixes; debugging, basics of C++, object oriented programming’).
-These guides are mostly independent of each other, so you don’t have to read all of them.
-Also the code itself is extensively commented, so you might not have to read the guides at all.</p>
-</div>
-<div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
-<p>This open-source C++ and Matlab code is published under the BSD 3-clause License,
-please read LICENSE.txt file for more information.</p>
-<p>Two Matlab functions used by the code to produce the spatial discretisation have been developed by others.
-They come with their own licence, see ‘license chebdif.txt’ and ‘licence cumsummat.txt’.</p>
+  <div class="section" id="osqp-solver-documentation">
+<h1>OSQP solver documentation<a class="headerlink" href="#osqp-solver-documentation" title="Permalink to this headline">¶</a></h1>
+<p><strong>Join our</strong> <a class="reference external" href="https://osqp.discourse.group/">forum</a> <strong>for any
+questions related to the solver!</strong></p>
+<p>The OSQP (Operator Splitting Quadratic Program) solver is a numerical
+optimization package for solving convex quadratic programs in the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{ll}
+  \mbox{minimize} &amp; \frac{1}{2} x^T P x + q^T x \\
+  \mbox{subject to} &amp; l \leq A x \leq u
+\end{array}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x\)</span> is the optimization variable and
+<span class="math notranslate nohighlight">\(P \in \mathbf{S}^{n}_{+}\)</span> a positive semidefinite matrix.</p>
+<p><strong>Code available on</strong> <a class="reference external" href="https://github.com/oxfordcontrol/osqp">GitHub</a>.</p>
+<p class="rubric">Citing OSQP</p>
+<p>If you are using OSQP for your work, we encourage you to</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="citing/index.html#citing"><span class="std std-ref">Cite the related papers</span></a></p></li>
+<li><p>Put a star on GitHub <a class="reference external" href="https://github.com/oxfordcontrol/osqp"><img alt="github-star" src="https://img.shields.io/github/stars/oxfordcontrol/osqp.svg?style=social&amp;label=Star" /></a></p></li>
+</ul>
+<p><strong>We are looking forward to hearing your success stories with OSQP!</strong> Please <a class="reference external" href="mailto:bartolomeo&#46;stellato&#37;&#52;&#48;gmail&#46;com">share them with us</a>.</p>
+<p class="rubric">Features</p>
+<dl class="glossary simple">
+<dt id="term-Efficient">Efficient<a class="headerlink" href="#term-Efficient" title="Permalink to this term">¶</a></dt><dd><p>It uses a custom ADMM-based first-order method requiring only a single matrix factorization in the setup phase. All the other operations are extremely cheap. It also implements custom sparse linear algebra routines exploiting structures in the problem data.</p>
+</dd>
+<dt id="term-Robust">Robust<a class="headerlink" href="#term-Robust" title="Permalink to this term">¶</a></dt><dd><p>The algorithm is absolutely division free after the setup and it requires no assumptions on problem data (the problem only needs to be convex). It just works!</p>
+</dd>
+<dt id="term-Detects-primal-dual-infeasible-problems">Detects primal / dual infeasible problems<a class="headerlink" href="#term-Detects-primal-dual-infeasible-problems" title="Permalink to this term">¶</a></dt><dd><p>When the problem is primal or dual infeasible, OSQP detects it. It is the first available QP solver based on first-order methods able to do so.</p>
+</dd>
+<dt id="term-Embeddable">Embeddable<a class="headerlink" href="#term-Embeddable" title="Permalink to this term">¶</a></dt><dd><p>It has an easy interface to generate customized embeddable C code with no memory manager required.</p>
+</dd>
+<dt id="term-Library-free">Library-free<a class="headerlink" href="#term-Library-free" title="Permalink to this term">¶</a></dt><dd><p>It requires no external library to run.</p>
+</dd>
+<dt id="term-Efficiently-warm-started">Efficiently warm started<a class="headerlink" href="#term-Efficiently-warm-started" title="Permalink to this term">¶</a></dt><dd><p>It can be easily warm-started and the matrix factorization can be cached to solve parametrized problems extremely efficiently.</p>
+</dd>
+<dt id="term-Interfaces">Interfaces<a class="headerlink" href="#term-Interfaces" title="Permalink to this term">¶</a></dt><dd><p>It can be interfaced to C, C++, Fortran (soon!), Python, Julia and Matlab.</p>
+</dd>
+</dl>
+<p class="rubric">License</p>
+<p>OSQP is distributed under the <a class="reference external" href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a></p>
+<p class="rubric">Credits</p>
+<p>The following people have been involved in the development of OSQP:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://stellato.io/">Bartolomeo Stellato</a> (Princeton University): main development</p></li>
+<li><p><a class="reference external" href="https://people.ee.ethz.ch/~gbanjac/">Goran Banjac</a> (ETH Zürich): main development</p></li>
+<li><p><a class="reference external" href="https://www.nicholasmoehle.com/">Nicholas Moehle</a> (Stanford University): methods, maths, and code generation</p></li>
+<li><p><a class="reference external" href="http://users.ox.ac.uk/~engs1373/">Paul Goulart</a> (University of Oxford): methods, maths, and Matlab interface</p></li>
+<li><p><a class="reference external" href="http://cse.lab.imtlucca.it/~bemporad/">Alberto Bemporad</a> (IMT Lucca): methods and maths</p></li>
+<li><p><a class="reference external" href="https://web.stanford.edu/~boyd/">Stephen Boyd</a> (Stanford University): methods and maths</p></li>
+<li><p><a class="reference external" href="mailto:i&#46;mcinerney17&#37;&#52;&#48;imperial&#46;ac&#46;uk">Ian McInerney</a> (Imperial College London): code generation, software development</p></li>
+<li><p><a class="reference external" href="mailto:michel&#46;schubiger&#37;&#52;&#48;bluewin&#46;ch">Michel Schubiger</a> (Schindler R&amp;D): GPU implementation</p></li>
+<li><p><a class="reference external" href="https://control.ee.ethz.ch/people/profile.john-lygeros.html">John Lygeros</a> (ETH Zurich): methods and maths</p></li>
+</ul>
+<p>Interfaces development</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.numerical.rl.ac.uk/people/nimg/nimg.html">Nick Gould</a> (Rutherford Appleton Laboratory): Fortran and CUTEst interfaces</p></li>
+<li><p><a class="reference external" href="mailto:eabarnard&#37;&#52;&#48;gmail&#46;com">Ed Barnard</a> (University of Oxford): Rust interface</p></li>
+</ul>
+<p class="rubric">Bug reports and support</p>
+<p>Please report any issues via the <a class="reference external" href="https://github.com/oxfordcontrol/osqp/issues">Github issue tracker</a>. All types of issues are welcome including bug reports, documentation typos, feature requests and so on.</p>
+<p class="rubric">Numerical benchmarks</p>
+<p>Numerical benchmarks against other solvers are available <a class="reference external" href="https://github.com/oxfordcontrol/osqp_benchmarks">here</a>.</p>
 <div class="toctree-wrapper compound">
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>The area of a circle is <span class="math notranslate nohighlight">\(A_\text{c} = (\pi/4) d^2\)</span>.</p>
 </div>
 
 
@@ -245,12 +262,15 @@ They come with their own licence, see ‘license chebdif.txt’ and ‘licence c
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="solver/index.html" class="btn btn-neutral float-right" title="The solver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, The Chancellor, Masters and Scholars of the University of Oxford, VITO nv, and the &#39;SLIDE&#39; Developers. All rights reserved.
+        &#169; Copyright 2021, Bartolomeo Stellato, Goran Banjac.
 
     </p>
   </div>
