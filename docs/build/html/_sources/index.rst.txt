@@ -1,110 +1,112 @@
-OSQP solver documentation
-==========================
-**Join our** `forum <https://osqp.discourse.group/>`_ **for any
-questions related to the solver!**
+.. SLIDE documentation master file, created by
+   sphinx-quickstart on Sun Aug 15 13:15:23 2021.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-The OSQP (Operator Splitting Quadratic Program) solver is a numerical
-optimization package for solving convex quadratic programs in the form
+.. image:: ../slide_logo.png
+   :width: 100%
 
-.. math::
-  \begin{array}{ll}
-    \mbox{minimize} & \frac{1}{2} x^T P x + q^T x \\
-    \mbox{subject to} & l \leq A x \leq u
-  \end{array}
-
-where :math:`x` is the optimization variable and
-:math:`P \in \mathbf{S}^{n}_{+}` a positive semidefinite matrix.
-
-**Code available on** `GitHub <https://github.com/oxfordcontrol/osqp>`_.
-
-.. rubric:: Citing OSQP
-
-If you are using OSQP for your work, we encourage you to
-
-* :ref:`Cite the related papers <citing>`
-* Put a star on GitHub |github-star|
+About *Slide*
+=================================
 
 
-.. |github-star| image:: https://img.shields.io/github/stars/oxfordcontrol/osqp.svg?style=social&label=Star
-  :target: https://github.com/oxfordcontrol/osqp
+*Slide* (simulator for lithium-ion degradation) is a code project mainly written in C++ to do fast simulations of degradation of lithium-ion batteries.
+Simulating 5000 1C CC cycles should take less than 1 minute; adding a CV phase doubles the calculation time to below 2 minutes. The project uses object oriented programming in C++, see documentation for more details. 
+
+The underlying battery model is the Single Particle Model (SPM) with a coupled bulk thermal model. 
+A spectral implementation of the SPM in Matlab was developed by Bizeray and Howey and is `available separately on GitHub <https://github.com/davidhowey/Spectral_li-ion_SPM>`_. 
+*Slide* adds various degradation models on top of the SPM. The equations were taken from literature and implemented in one large coupled model. Users can easily select which models they want to include in their simulations. They can set the values of the fitting parameters of those degradation models to fit their own data.
+
+*Slide* is written to behave similarly to a battery tester. It offers functions to load cells with a constant current, a current profile or a constant voltage such that users can program their own degradation procedures. Some standard procedures have already been implemented (for calendar ageing and cycle ageing with regular CCCV cycles or with drive cycles). Also some reference performance tests have already been coded (to simulate a the capacity measurement, OCV curves, pulse discharge, etc.). Users can choose to store data points (current, voltage, temperature) at fixed time intervals during the degradation experiments, similar to how a battery tester stores such data.
+
+The results from the simulations are written to csv files. Users can write their own code to read and plot these results, but MATLAB-scripts are provided for this too.
+
+Detailed documentation is provided in the pdf documents. The code itself is also extensively documented.
+
+If you use *Slide* in your work, please cite our paper:
+
+J.M. Reniers, G. Mulder, D.A. Howey, "Review and performance comparison of mechanical-chemical degradation models for lithium-ion batteries", Journal of The Electrochemical Society, 166(14), A3189, 2019, DOI [10.1149/2.0281914jes](https://doi.org/10.1149/2.0281914jes).
+
+This code has been developed at the Department of Engineering Science of 
+the University of Oxford. 
+For information about our lithium-ion battery research, visit the `Battery Intelligence Lab <https://howey.eng.ox.ac.uk>`_ website. 
+
+For more information and comments, please contact `david.howey@eng.ox.ac.uk <david.howey@eng.ox.ac.uk>`_. 
+   
+Requirements
+============
+You will need a C++ programming environment to edit, compile and run the code.
+Eclipse is the environment used to develop the code, but other environments should work as well.
+Your computer must also have a C++ compiler installed.
+The code has been tested using g++.
+Extensive guidelines on how to install those programs is provided in the documentation.
+
+To display the results, various Matlab scripts are provided.
+To run those, you will need to have installed Matlab. 
+The code has been tested using Matlab R2018a, but should work with other releases with no or minor modifications.
+
+To calculate the spatial discretisation, two open-source Matlab functions developped by others are being used.
+If you don't change the discretisation, you will not need them.
+If you do change the discretisation, please read the license files attached to those two functions ('license chebdif.txt' and 'lisence cumsummat.txt').
+
+   
+Installation
+============
+### Option 1 - Downloading a .zip file ###
+`Download a .zip file of the code <https://github.com/davidhowey/SLIDE/archive/master.zip>`_
+
+Then, unzip the folder in a chosen directory on your computer.
+
+### Option 2 - Cloning the repository with Git ###
+To clone the repository, you will first need to have [Git][6] installed on 
+your computer. Then, navigate to the directory where you want to clone the 
+repository in a terminal, and type:
+
+.. code:: 
+   git clone https://github.com/davidhowey/SLIDE.git
+
+The folder containing all the files should appear in your chosen directory.
 
 
-**We are looking forward to hearing your success stories with OSQP!** Please `share them with us <bartolomeo.stellato@gmail.com>`_.
+Getting started
+===============
+Detailed instructions on how to get started are in the documentation.
+You first have to import the code to your programming environment and make sure the settings are correct (e.g. to allow enough memory for the calculation).
+Then you can open Main.cpp, which implements the main-function. In this function you choose what to simulate by uncommenting the thing you want to do (and commenting all other lines). 
+It is recommended to start with the CCCV-function, which simulates a few CCCV cycles.
+You will then have to build (or compile) the code, which might take a while the first time you do this.
+Now you can run the code (either locally in the programming environment or by running the executable which was created by the compiler).
+While the simulation is running, csv files with the results are written in one or multiple subfolders.
+When the simulation has finished, you can run the corresponding MATLAB-script (e.g. readCCCV.m) to plot the outcomes.
 
-.. rubric:: Features
-
-
-.. glossary::
-
-    Efficient
-        It uses a custom ADMM-based first-order method requiring only a single matrix factorization in the setup phase. All the other operations are extremely cheap. It also implements custom sparse linear algebra routines exploiting structures in the problem data.
-
-    Robust
-        The algorithm is absolutely division free after the setup and it requires no assumptions on problem data (the problem only needs to be convex). It just works!
-
-    Detects primal / dual infeasible problems
-        When the problem is primal or dual infeasible, OSQP detects it. It is the first available QP solver based on first-order methods able to do so.
-
-    Embeddable
-        It has an easy interface to generate customized embeddable C code with no memory manager required.
-
-    Library-free
-        It requires no external library to run.
-
-    Efficiently warm started
-        It can be easily warm-started and the matrix factorization can be cached to solve parametrized problems extremely efficiently.
-
-    Interfaces
-        It can be interfaced to C, C++, Fortran (soon!), Python, Julia and Matlab.
+Much more detailed documentation can be found in the documentation (from '1 Getting started' to '7 appendixes; debugging, basics of C++, object oriented programming'). 
+These guides are mostly independent of each other, so you don't have to read all of them.
+Also the code itself is extensively commented, so you might not have to read the guides at all.
 
 
+License
+=======
+This open-source C++ and Matlab code is published under the BSD 3-clause License,
+please read LICENSE.txt file for more information.
 
-.. rubric:: License
+Two Matlab functions used by the code to produce the spatial discretisation have been developed by others.
+They come with their own licence, see 'license chebdif.txt' and 'licence cumsummat.txt'.
 
-OSQP is distributed under the `Apache 2.0 License <https://www.apache.org/licenses/LICENSE-2.0>`_
-
-
-
-.. rubric:: Credits
-
-The following people have been involved in the development of OSQP:
-
-* `Bartolomeo Stellato <https://stellato.io/>`_ (Princeton University): main development
-* `Goran Banjac <https://people.ee.ethz.ch/~gbanjac/>`_ (ETH Zürich): main development
-* `Nicholas Moehle <https://www.nicholasmoehle.com/>`_ (Stanford University): methods, maths, and code generation
-* `Paul Goulart <http://users.ox.ac.uk/~engs1373/>`_ (University of Oxford): methods, maths, and Matlab interface
-* `Alberto Bemporad <http://cse.lab.imtlucca.it/~bemporad/>`_ (IMT Lucca): methods and maths
-* `Stephen Boyd <https://web.stanford.edu/~boyd/>`_ (Stanford University): methods and maths
-* `Ian McInerney <mailto:i.mcinerney17@imperial.ac.uk>`_ (Imperial College London): code generation, software development
-* `Michel Schubiger <mailto:michel.schubiger@bluewin.ch>`_ (Schindler R&D): GPU implementation
-* `John Lygeros <https://control.ee.ethz.ch/people/profile.john-lygeros.html>`_ (ETH Zurich): methods and maths
-
-Interfaces development
-
-* `Nick Gould <http://www.numerical.rl.ac.uk/people/nimg/nimg.html>`_ (Rutherford Appleton Laboratory): Fortran and CUTEst interfaces
-* `Ed Barnard <eabarnard@gmail.com>`_ (University of Oxford): Rust interface
-
-
-.. rubric:: Bug reports and support
-
-Please report any issues via the `Github issue tracker <https://github.com/oxfordcontrol/osqp/issues>`_. All types of issues are welcome including bug reports, documentation typos, feature requests and so on.
-
-
-.. rubric:: Numerical benchmarks
-
-Numerical benchmarks against other solvers are available `here <https://github.com/oxfordcontrol/osqp_benchmarks>`_.
 
 
 .. toctree::
-   :hidden:
    :maxdepth: 2
-   :caption: User Documentation
+   :caption: Contents:
 
-   solver/index
-   get_started/index
-   interfaces/index
-   parsers/index
-   codegen/index
-   examples/index
-   contributing/index
-   citing/index
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+
+The area of a circle is :math:`A_\text{c} = (\pi/4) d^2`.
+
